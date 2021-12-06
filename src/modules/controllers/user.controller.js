@@ -2,7 +2,7 @@ const User = require('../../db/models/user/index');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
-const { secret } = require('../../../config')
+const { secret } = require('../../../config');
 
 const generateAccessToken = (id) => {
   const payload = {id};
@@ -37,12 +37,12 @@ module.exports.authorise = async (req, res) => {
     const user = await User.findOne({login});
     
     if (!user) {
-      return res.status(400).send(`Пользователь ${login} не найден`);
+      return res.status(400).send(`User ${login} is not found`);
     } else {
       const validPassword = bcrypt.compareSync(password, user.password);
 
       if (!validPassword) {
-        return res.status(400).send(`Пароль неверный`);
+        return res.status(400).send(`Password is incorrect`);
       }
 
       const token = generateAccessToken(user._id);
