@@ -1,5 +1,5 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const mongoose = require("mongoose");
 const app = express();
@@ -12,7 +12,7 @@ mongoose.connect(url, {
                         useUnifiedTopology: true
                       });
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 app.use("/", apiRoutes);
 
