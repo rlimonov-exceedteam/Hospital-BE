@@ -28,7 +28,7 @@ module.exports.addTableData = async (req, res) => {
     doctorName &&
     complaints &&
     date 
-    ) {
+  ) {
     const tableData = new TableData(req.body);
     tableData.save().then(result => {
       res.send(result);
