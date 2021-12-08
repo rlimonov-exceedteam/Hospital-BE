@@ -9,7 +9,9 @@ const {
 
 const {
   addTableData,
-  getAllTableData
+  getAllTableData,
+  updateTableData,
+  deleteTableData
 } = require('../controllers/tableData.controller');
 
 router.post('/createNewUser', [
@@ -20,5 +22,7 @@ router.post('/authorise', authorise);
 
 router.get('/getAllTableData', getAllTableData);
 router.post('/addTableData', addTableData);
+router.patch('/updateTableData', updateTableData);
+router.delete('/deleteTableData', deleteTableData);
 
 module.exports = router;

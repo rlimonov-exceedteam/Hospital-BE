@@ -37,3 +37,25 @@ module.exports.addTableData = async (req, res) => {
     res.status(422).send('Data is incorrect, error!');
   }
 }
+
+module.exports.updateTableData = (req, res) => {
+  const body = req.body;
+
+  if (body) {
+    TableData.findOneAndUpdate({_id: req.body._id}, req.body, {new: true}).then(result => {
+      res.send(result);
+    });
+  } else {
+    res.status(422).send('Data is incorrect, error!');
+  }
+}
+
+module.exports.deleteTableData = (req, res) => {
+  if (!req.body._id) {
+    return res.status(422).send('Data is incorrect, error!');
+  } else {
+    TableData.deleteOne({_id: req.body._id}).then(result => {
+      res.send('Succesfully deleted');
+    });
+  }
+}
