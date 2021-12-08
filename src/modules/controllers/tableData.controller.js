@@ -62,10 +62,10 @@ module.exports.updateTableData = (req, res) => {
 }
 
 module.exports.deleteTableData = (req, res) => {
-  if (!req.body._id) {
+  if (!req.query._id) {
     return res.status(422).send('Data is incorrect, error!');
   } else {
-    TableData.deleteOne({_id: req.body._id}).then(result => {
+    TableData.deleteOne({_id: req.query._id}).then(result => {
       res.send('Succesfully deleted');
     });
   }
