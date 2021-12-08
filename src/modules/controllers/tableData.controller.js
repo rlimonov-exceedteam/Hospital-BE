@@ -41,7 +41,7 @@ module.exports.addTableData = async (req, res) => {
 module.exports.updateTableData = (req, res) => {
   const body = req.body;
 
-  if (body) {
+  if (Object.keys(body).length !== 0) {
     TableData.findOneAndUpdate({_id: req.body._id}, req.body, {new: true}).then(result => {
       res.send(result);
     });
