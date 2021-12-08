@@ -39,10 +39,21 @@ module.exports.addTableData = async (req, res) => {
 }
 
 module.exports.updateTableData = (req, res) => {
-  const body = req.body;
+  const {
+    patientName, 
+    doctorName,
+    complaints,
+    date,
+    _id
+  } = req.body;
 
-  if (Object.keys(body).length !== 0) {
-    TableData.findOneAndUpdate({_id: req.body._id}, req.body, {new: true}).then(result => {
+  if (
+    patientName ||
+    doctorName ||
+    complaints ||
+    date
+  ) {
+    TableData.findOneAndUpdate({_id: _id}, req.body, {new: true}).then(result => {
       res.send(result);
     });
   } else {
