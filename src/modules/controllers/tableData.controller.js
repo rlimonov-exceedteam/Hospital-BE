@@ -2,8 +2,8 @@ const TableData = require('../../db/models/tableData/index');
 
 module.exports.getAllTableData = async (req, res) => {
   try {
-    const login = req.query.login;
-    TableData.find({ login: login }).then(result => {
+    const token = req.query.token;
+    TableData.find({ userId: token }).then(result => {
       res.send(result);
     });
   } catch (error) {
@@ -12,12 +12,14 @@ module.exports.getAllTableData = async (req, res) => {
         status: error.status || 500,
         message: error.message || "Internal Server Error",
       },
+
     });
   }
 }
 
 module.exports.addTableData = async (req, res) => {
   const { 
+    userId,
     patientName, 
     doctorName,
     complaints,
@@ -25,6 +27,7 @@ module.exports.addTableData = async (req, res) => {
   } = req.body;
   
   if (
+    userId,
     patientName &&
     doctorName &&
     complaints &&
@@ -42,7 +45,7 @@ module.exports.addTableData = async (req, res) => {
 module.exports.updateTableData = (req, res) => {
   const body = req.body;
 
-  if (Object.keys(body).length !== 0) {
+  if (body.token) {
     TableData.findOneAndUpdate({_id: req.body._id}, req.body, {new: true}).then(result => {
       res.send(result);
     });

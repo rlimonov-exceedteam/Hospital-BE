@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const tableDataScheme = new Schema({
-  login: String,
+  userId: String,
   patientName: String,
   doctorName: String,
   date: String,
