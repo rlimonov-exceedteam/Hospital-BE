@@ -23,8 +23,9 @@ module.exports.createNewUser = async (req, res) => {
     const hashPassword = bcrypt.hashSync(password, 7);
     const user = new User({login, password: hashPassword})
 
-    user.save().then(result => {
-      res.send(result);
+    user.save().then(() => {
+      const token = generateAccessToken(user._id);
+      res.send({token, login});
     });
   } else {
     res.status(422).send('Data is incorrect, error');
@@ -46,7 +47,7 @@ module.exports.authorise = async (req, res) => {
       }
 
       const token = generateAccessToken(user._id);
-      res.send({token});
+      res.send({token, login});
     }
   } catch(e) {
     console.log(e);

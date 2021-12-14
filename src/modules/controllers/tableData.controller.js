@@ -2,7 +2,8 @@ const TableData = require('../../db/models/tableData/index');
 
 module.exports.getAllTableData = async (req, res) => {
   try {
-    TableData.find().then(result => {
+    const login = req.query.login;
+    TableData.find({ login: login }).then(result => {
       res.send(result);
     });
   } catch (error) {
@@ -39,21 +40,10 @@ module.exports.addTableData = async (req, res) => {
 }
 
 module.exports.updateTableData = (req, res) => {
-  const {
-    patientName, 
-    doctorName,
-    complaints,
-    date,
-    _id
-  } = req.body;
+  const body = req.body;
 
-  if (
-    patientName ||
-    doctorName ||
-    complaints ||
-    date
-  ) {
-    TableData.findOneAndUpdate({_id: _id}, req.body, {new: true}).then(result => {
+  if (Object.keys(body).length !== 0) {
+    TableData.findOneAndUpdate({_id: req.body._id}, req.body, {new: true}).then(result => {
       res.send(result);
     });
   } else {
