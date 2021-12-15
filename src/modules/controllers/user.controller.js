@@ -7,7 +7,7 @@ const { secret } = require('../../../config');
 const generateAccessToken = (id) => {
   const payload = {id};
 
-  return jwt.sign(payload, secret, {expiresIn: '24h'});
+  return jwt.sign(payload, secret, {expiresIn: '240h'});
 }
 
 module.exports.createNewUser = async (req, res) => {
@@ -25,7 +25,7 @@ module.exports.createNewUser = async (req, res) => {
 
     user.save().then(() => {
       const token = generateAccessToken(user._id);
-      res.send({token, login});
+      res.send({token});
     });
   } else {
     res.status(422).send('Data is incorrect, error');
