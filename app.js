@@ -1,22 +1,31 @@
+require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require("mongoose");
+
+const PORT = process.env.PORT || 8000;
 const app = express();
 
 const apiRoutes = require('./src/modules/routes/routes');
 
-const url = "mongodb+srv://romanphilimon95:695v89eqbhh4hy9FTK2S@to-do-list.ebsb2.mongodb.net/To-Do-list?retryWrites=true&w=majority";
-mongoose.connect(url, {
-                        useNewUrlParser: true,
-                        useUnifiedTopology: true
-                      });
+try {
+  const url = process.env.DB_URL;
+  mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
+} catch(error) {
+  console.log(error);
+}
 
-app.use(express.json());
+app.use(bodyParser());
+app.use(cookieParser());
 app.use(cors());
 app.use("/", apiRoutes);
 
 
-app.listen(8000, () => {
+app.listen(PORT, () => {
   console.log('App listening');
 });
